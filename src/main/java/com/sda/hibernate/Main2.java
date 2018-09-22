@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Main {
+public class Main2 {
 
     private static final SessionFactory sessionFactory;
 

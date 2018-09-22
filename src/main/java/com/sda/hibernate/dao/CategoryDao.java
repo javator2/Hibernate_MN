@@ -4,6 +4,7 @@ import com.sda.hibernate.config.HibernateUtils;
 import com.sda.hibernate.entity.Category;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ public class CategoryDao implements DaoInterface<Category> {
     private Transaction currentTransaction;
 
     public CategoryDao(){
-        currentSession = HibernateUtils.getSession();
-        currentTransaction = currentSession.beginTransaction();
+        //currentSession = HibernateUtils.getSession();
+        //currentTransaction = currentSession.beginTransaction();
     }
 
     public Session getCurrentSession(){
@@ -35,7 +36,7 @@ public class CategoryDao implements DaoInterface<Category> {
 
     @Override
     public Category save(Category entity) {
-        getCurrentSession().save(entity);
+            getCurrentSession().save(entity);
         return entity;
     }
 
@@ -46,21 +47,31 @@ public class CategoryDao implements DaoInterface<Category> {
 
     @Override
     public Category findById(int id) {
-        return null;
+        //TODO zabezpieczyć przed NullPointedExeption
+        Category category = getCurrentSession().get(Category.class, id);
+        return category;
     }
 
     @Override
     public void delete(Category entity) {
+        //TODO zabezpieczenie przed usunięciem nieistniejącego rekordu
+        getCurrentSession().delete(entity);
 
     }
 
     @Override
     public void deleteAll() {
+        String sql = "delete from category";
+        Query query = getCurrentSession().createQuery(sql);
+        query.executeUpdate();
 
     }
 
     @Override
     public List<Category> findAll() {
-        return null;
+        List <Category> categoryList = getCurrentSession().createQuery(
+                "FROM" + Category.class.getName()
+        ).list();
+        return categoryList;
     }
 }

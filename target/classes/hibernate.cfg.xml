@@ -27,6 +27,7 @@
         </property>
 
         <property name="hibernate.connection.password">
+            Kufatka-1024
 
         </property>
 
