@@ -9,11 +9,11 @@ public class HibernateUtils {
 
         private static SessionFactory sf = new Configuration().configure().buildSessionFactory();
 
-        private static Session session = sf.openSession();
+        private static Session session;
 
         public synchronized static Session getSession(){
             if (session==null){
-                session= (Session) new HibernateUtils();
+                session= sf.openSession();
             }
             return session;
         }
